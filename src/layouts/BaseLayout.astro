@@ -1,0 +1,27 @@
+---
+import "../styles/global.css";
+const { title = "Tweetsie", desc = "Prototype" } = Astro.props;
+---
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body class="min-h-screen bg-neutral-50 text-neutral-900">
+    <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
+      <div class="mx-auto max-w-6xl px-4 py-3 flex items-center gap-3">
+        <a href="/" class="font-semibold tracking-tight">Tweetsie</a>
+        <span class="text-neutral-400">/</span>
+        <span class="text-sm text-neutral-500">{desc}</span>
+        <nav class="ml-auto text-sm">
+          <a href="/staging" class="text-neutral-600 hover:underline">Staging</a>
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-6xl px-4 py-6">
+      <slot />
+    </main>
+  </body>
+</html>

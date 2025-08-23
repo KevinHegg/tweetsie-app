@@ -1,0 +1,199 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="HELLO WORLD • Tweetsie" desc="Hello World">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold">HELLO WORLD</h1>
+    <p class="text-sm text-neutral-600">
+      Fun demo: a little JS snake eats the letters in order, then stops.
+    </p>
+  </div>
+
+  <div class="border rounded-xl overflow-hidden bg-white">
+    <canvas id="snake" style="display:block; width:100%; height:65vh"></canvas>
+  </div>
+
+  <div class="mt-4 flex items-center gap-3">
+    <button id="reset" class="rounded-lg border px-3 py-1.5 text-sm bg-neutral-50 hover:bg-neutral-100">
+      Reset
+    </button>
+    <span id="status" class="text-sm text-neutral-600"></span>
+  </div>
+
+  <script>
+    (() => {
+      const PHRASE = "HELLO WORLD";
+      const LETTERS = PHRASE.replace(/\s+/g, "").split(""); // eat only letters, ignore spaces
+
+      const canvas = document.getElementById("snake");
+      const ctx = canvas.getContext("2d");
+      const statusEl = document.getElementById("status");
+      const resetBtn = document.getElementById("reset");
+
+      // responsive canvas
+      function fit() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(640, Math.floor(rect.width));
+        canvas.height = Math.max(380, Math.floor(rect.height));
+      }
+      fit(); addEventListener("resize", fit);
+
+      // Random targets for letters (non-overlapping-ish)
+      function placeTargets() {
+        const targets = [];
+        const margin = 60;
+        const minDist = 90;
+        for (const ch of LETTERS) {
+          let tries = 0, x, y, ok = false;
+          while (tries++ < 500 && !ok) {
+            x = margin + Math.random() * (canvas.width - margin * 2);
+            y = margin + Math.random() * (canvas.height - margin * 2);
+            ok = targets.every(t => ((t.x - x)**2 + (t.y - y)**2) > minDist*minDist);
+          }
+          targets.push({ ch, x, y, eaten:false });
+        }
+        return targets;
+      }
+
+      // Snake model
+      const SEG_LEN = 16;
+      const SEG_COUNT = 26;
+      const SPEED = 2.6;
+      let targets, head, vel, segs, collected = 0, running = true;
+
+      function init() {
+        fit();
+        targets = placeTargets();
+        const cx = canvas.width * 0.5, cy = canvas.height * 0.5;
+        head = { x: cx, y: cy };
+        vel = { x: SPEED, y: 0 };
+        segs = Array.from({length: SEG_COUNT}, (_, i) => ({ x: cx - i*SEG_LEN, y: cy }));
+        collected = 0;
+        running = true;
+        statusEl.textContent = "Collecting: " + LETTERS.join(" ");
+      }
+
+      // Helpers
+      const lerp = (a,b,t)=>a+(b-a)*t;
+      const dist = (a,b)=>Math.hypot(a.x-b.x, a.y-b.y);
+      const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
+
+      function steerToward(target, bias=0.08) {
+        const dx = target.x - head.x;
+        const dy = target.y - head.y;
+        const len = Math.hypot(dx,dy) || 1;
+        const desired = { x: (dx/len)*SPEED, y: (dy/len)*SPEED };
+        vel.x = lerp(vel.x, desired.x, bias);
+        vel.y = lerp(vel.y, desired.y, bias);
+        // soft bounds
+        if (head.x < 24 || head.x > canvas.width-24 || head.y < 24 || head.y > canvas.height-24) {
+          vel.x += (canvas.width*0.5 - head.x) * 0.0008;
+          vel.y += (canvas.height*0.5 - head.y) * 0.0008;
+        }
+      }
+
+      function step() {
+        if (!running) return;
+        // current target letter
+        const t = targets[collected];
+        if (t) steerToward(t);
+
+        // move head
+        head.x += vel.x; head.y += vel.y;
+        head.x = clamp(head.x, 8, canvas.width-8);
+        head.y = clamp(head.y, 8, canvas.height-8);
+
+        // follow chain
+        segs[0].x = head.x; segs[0].y = head.y;
+        for (let i=1; i<segs.length; i++) {
+          const p = segs[i-1], s = segs[i];
+          const dx = p.x - s.x, dy = p.y - s.y;
+          const d = Math.hypot(dx,dy) || 1;
+          const nx = dx / d, ny = dy / d;
+          s.x = p.x - nx * SEG_LEN;
+          s.y = p.y - ny * SEG_LEN;
+        }
+
+        // eat?
+        if (t && dist(head, t) < 24) {
+          t.eaten = true;
+          collected++;
+          if (collected >= LETTERS.length) {
+            running = false;
+            statusEl.textContent = "Done.";
+          } else {
+            statusEl.textContent = "Next: " + LETTERS[collected];
+          }
+        }
+      }
+
+      function drawTargets() {
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        for (let i=0; i<targets.length; i++) {
+          const t = targets[i];
+          if (t.eaten) continue;
+          // highlight current target
+          if (i === collected) {
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(59,130,246,0.35)"; // blue-400 @ 35%
+            ctx.lineWidth = 6;
+            ctx.arc(t.x, t.y, 30, 0, Math.PI*2);
+            ctx.stroke();
+          }
+          ctx.fillStyle = "#111827"; // neutral-900
+          ctx.font = "bold 56px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.fillText(t.ch, t.x, t.y);
+        }
+        ctx.restore();
+      }
+
+      function drawSnake() {
+        ctx.save();
+        // draw links
+        for (let i=segs.length-1; i>=0; i--) {
+          const s = segs[i];
+          // assign collected letters from tail→head
+          const tailIndex = segs.length - 1;
+          const j = tailIndex - i; // 0 at tail
+          const ch = (j < collected) ? LETTERS[j] : "";
+          if (ch) {
+            ctx.fillStyle = "#0f172a"; // slate-900
+            ctx.font = "bold 18px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(ch, s.x, s.y);
+          } else {
+            ctx.beginPath();
+            ctx.fillStyle = i < 3 ? "#10b981" : "#a3e635"; // head greener
+            ctx.arc(s.x, s.y, 6, 0, Math.PI*2);
+            ctx.fill();
+          }
+        }
+        // eyes
+        const h = segs[0], n = segs[1];
+        const vx = h.x - n.x, vy = h.y - n.y;
+        const L = Math.hypot(vx,vy) || 1;
+        const ex = -vy / L, ey = vx / L; // perpendicular
+        ctx.fillStyle = "#111827";
+        ctx.beginPath(); ctx.arc(h.x + ex*5, h.y + ey*5, 2, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(h.x - ex*5, h.y - ey*5, 2, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+      }
+
+      function loop() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        drawTargets();
+        step();
+        drawSnake();
+        requestAnimationFrame(loop);
+      }
+
+      resetBtn.addEventListener("click", () => { init(); });
+
+      init();
+      loop();
+    })();
+  </script>
+</BaseLayout>

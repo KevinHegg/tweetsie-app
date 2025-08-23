@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal staging styles */
+:root { color-scheme: light; }
+
+/* HELLO WORLD scatter (we'll replace with Snake in-session) */
+.scatter {
+  position: relative;
+  height: 60vh;
+}
+.scatter .ch {
+  position: absolute;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  line-height: 1;
+  user-select: none;
+}

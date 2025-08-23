@@ -1,0 +1,64 @@
+# Project: Tweetsie (Collections as Data → Apps)
+# Purpose
+We are running a 60-minute collaborative live-coding session on Zoom, using Cursor to build a tiny Astro + Tailwind prototype from pre-staged collection data (images + JSON).
+
+# Non-negotiables (do not undo)
+- Keep the homepage `src/pages/index.astro` HELLO WORLD snake animation intact unless explicitly instructed.
+- Client-side only: no servers, no DB, no serverless functions.
+- Use Astro + Tailwind. No extra UI frameworks. Keep bundle tiny.
+- Data source is local only: `/public/data/items.json` (copied from `/data/items*.json` at build).
+- Images live under `/public/images/` and are referenced by `image` in each record.
+- Keep accessibility in mind: semantic HTML, alt text, keyboard focus.
+
+# Data
+- Shape (typical):
+  {
+    id, filename, image, title, date, year_start, year_end, year,
+    description, medium, measurements, width_in, height_in,
+    repository, subjects (string[]), subjects_joined, local_identifier,
+    source, source_box, source_folder, collection_code,
+    rights, rights_notes, source_url,
+    people (string[]), places (string[]), railroads (string[])
+  }
+- ALWAYS parse defensively (fields may be missing).
+
+# Style & structure
+- Keep changes minimal and readable.
+- Prefer small, composable components (`src/components/…`) and tiny helpers (`src/lib/…`).
+- Use Tailwind for styling (no custom global CSS unless necessary).
+- Don’t pull external fonts or scripts.
+- TypeScript where helpful; otherwise plain JS is fine.
+
+# Preferred file locations
+- Gallery/list views → `src/components/Gallery.astro`
+- Detail page → `src/pages/item/[id].astro`
+- Data utilities → `src/lib/data.ts` (client fetch & transforms)
+- Session notes → `src/pages/staging.astro`
+
+# Tasks we will likely ask for (in order)
+1) **Do not touch** the snake; maybe expose speed/size in constants for live tweaks.
+2) Create a tiny data utility to fetch `/data/items.json` and return `Item[]` with narrow typing.
+3) Build a minimal list of titles (no styles) on a new route `/items` (progressively enhance later).
+4) Add filters (subject select, year range) and simple client-side search.
+5) Add item detail route `/item/[id]` that shows image + basic metadata.
+6) Add “Export CSV (current results)” client-side.
+7) (Optional if time) Mosaic grid that respects `orientation` and `aspect_ratio`.
+
+# Acceptance criteria
+- No network calls other than `fetch('/data/items.json')`.
+- Pages must build on Netlify (static).
+- Lint-y code, short readable functions, comments where non-obvious.
+- No dead code; no large dependencies.
+- Keep the homepage animation working after each change.
+
+# Nice to haves (if time)
+- URL state for filters (query params).
+- Keyboard navigation in gallery.
+- Zero-CLS image rendering (use width/height if available).
+
+# Guardrails
+- If asked to replace the homepage, do it in a new page instead.
+- If a package is proposed, ask to confirm—default to “no new deps”.
+
+# Commit style (for live diffs)
+- Small, descriptive commits: "feat(items): minimal list view", "chore: add data fetch util".

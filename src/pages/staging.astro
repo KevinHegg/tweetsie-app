@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const REPO_URL = "https://github.com/kevinhegg/tweetsie-app"; // TODO: replace with your repo
+const SITE_URL = "https://tweetsie.app"; // or tweetsy.app if that’s the one
+---
+<BaseLayout title="[Collections as Data] for Apps" desc="Staging">
+  <h1 class="text-2xl font-semibold mb-2">Collections as Data for Apps</h1>
+  <p class="text-sm text-neutral-700 mb-6">
+    One-hour collaborative, prompt-driven build in Cursor. We start from a Hello World page and
+    have <code>/data</code> + <code>/public/images</code> pre-staged for speed.
+  </p>
+
+  <div class="grid gap-4">
+    <section class="bg-white border rounded-xl p-4">
+      <h2 class="font-semibold mb-2">Plan (approx.)</h2>
+      <ol class="list-decimal ml-5 space-y-1 text-sm">
+        <li>Warm-up: “Snake eats HELLO WORLD” on the homepage.</li>
+        <li>Wire <code>items.json</code> (client-side fetch) and render a minimal list.</li>
+        <li>Audience-driven: filters (subjects, years), details page, CSV export, etc.</li>
+      </ol>
+    </section>
+
+    <section class="bg-white border rounded-xl p-4 text-sm">
+      <h2 class="font-semibold mb-2">Starting point</h2>
+      <ul class="list-disc ml-5 space-y-1">
+        <li>Repo: <a class="underline" href={REPO_URL}>{REPO_URL}</a></li>
+        <li>Site: <a class="underline" href={SITE_URL}>{SITE_URL}</a></li>
+        <li>Data staged in <code>/data</code> (and can copy to <code>/public/data/items.json</code> on build).</li>
+        <li>Images staged in <code>/public/images/</code>.</li>
+      </ul>
+    </section>
+
+    <section class="bg-white border rounded-xl p-4 text-sm">
+      <h2 class="font-semibold mb-2">Notes</h2>
+      <ul class="list-disc ml-5 space-y-1">
+        <li>No server required; pure client-side Astro + Tailwind.</li>
+        <li>We’ll write prompts together and let Cursor implement.</li>
+        <li>Scope: prototype only; can refine after the session.</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
