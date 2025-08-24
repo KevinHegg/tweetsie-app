@@ -293,9 +293,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
            ctx.fillRect(this.x - 18, this.y - 10, 12, 10);
            ctx.fillRect(this.x + 6, this.y - 10, 12, 10);
            
-           // Letter
-           ctx.fillStyle = '#FFFFFF';
-           ctx.font = 'bold 20px Arial';
+           // Letter - make it more distinct and bold
+           ctx.fillStyle = '#000000';
+           ctx.font = 'bold 26px Arial';
            ctx.textAlign = 'center';
            ctx.textBaseline = 'middle';
            ctx.fillText(this.letter, this.x, this.y + 1);
@@ -598,9 +598,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                ctx.fillRect(car.x - 15, car.y - 8, 10, 8);
                ctx.fillRect(car.x + 5, car.y - 8, 10, 8);
                
-               // Letter
-               ctx.fillStyle = '#FFFFFF';
-               ctx.font = 'bold 18px Arial';
+               // Letter - make it more distinct and bold
+               ctx.fillStyle = '#000000';
+               ctx.font = 'bold 22px Arial';
                ctx.textAlign = 'center';
                ctx.textBaseline = 'middle';
                ctx.fillText(car.letter, car.x, car.y + 1);
