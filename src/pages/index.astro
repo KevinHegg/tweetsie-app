@@ -33,6 +33,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         const rect = canvas.getBoundingClientRect();
         canvas.width = Math.max(800, Math.floor(rect.width));
         canvas.height = Math.max(500, Math.floor(rect.height));
+        
+        // Recalculate letter positions after canvas resize
+        placeLetterCars();
       }
       fit(); 
       addEventListener("resize", fit);
@@ -48,7 +51,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         state: 'collecting' | 'complete' | 'smoking';
         smokeParticles: SmokeParticle[];
       } = {
-        x: 60,
+        x: 50,
         y: canvas.height / 2 - 80, // Upper track
         direction: 1,
         speed: 3,
@@ -68,7 +71,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         state: 'collecting' | 'complete' | 'smoking';
         smokeParticles: SmokeParticle[];
       } = {
-        x: 60,
+        x: 50,
         y: canvas.height / 2 + 80, // Lower track
         direction: 1,
         speed: 2.8, // Slightly different speed for variety
@@ -103,14 +106,25 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         
         const track1Y = canvas.height / 2 - 80; // Upper track
         const track2Y = canvas.height / 2 + 80; // Lower track
-        const spacing = 70; // Good spacing for readability
-        const startX = 150;
+        
+        // Calculate responsive spacing based on canvas width
+        const totalWidth = canvas.width;
+        const margin = 100; // Left and right margins
+        const availableWidth = totalWidth - (margin * 2);
+        
+        // Calculate spacing to fit all letters
+        const spacing1 = Math.min(70, availableWidth / LETTERS1.length);
+        const spacing2 = Math.min(70, availableWidth / LETTERS2.length);
+        
+        // Center the letter collections
+        const startX1 = margin + (availableWidth - (LETTERS1.length - 1) * spacing1) / 2;
+        const startX2 = margin + (availableWidth - (LETTERS2.length - 1) * spacing2) / 2;
         
         // Place letters for TWEETSIESAYS on upper track
         for (let i = 0; i < LETTERS1.length; i++) {
           letterCars1.push({
             letter: LETTERS1[i],
-            x: startX + i * spacing,
+            x: startX1 + i * spacing1,
             y: track1Y,
             collected: false,
             carWidth: 60,
@@ -122,7 +136,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         for (let i = 0; i < LETTERS2.length; i++) {
           letterCars2.push({
             letter: LETTERS2[i],
-            x: startX + i * spacing,
+            x: startX2 + i * spacing2,
             y: track2Y,
             collected: false,
             carWidth: 60,
@@ -237,7 +251,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         fit();
         placeLetterCars();
         train1 = {
-          x: 60,
+          x: 50,
           y: canvas.height / 2 - 80,
           direction: 1,
           speed: 3,
@@ -247,7 +261,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           smokeParticles: []
         };
         train2 = {
-          x: 60,
+          x: 50,
           y: canvas.height / 2 + 80,
           direction: 1,
           speed: 2.8,
@@ -268,7 +282,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         // Check boundaries and change direction
         if (train.x > canvas.width - 100) {
           train.direction = -1;
-        } else if (train.x < 60) {
+        } else if (train.x < 50) {
           train.direction = 1;
         }
         
