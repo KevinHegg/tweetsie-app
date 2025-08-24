@@ -288,10 +288,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
            ctx.lineWidth = 2;
            ctx.strokeRect(this.x - 25, this.y - 15, 50, 30);
            
-           // Windows
-           ctx.fillStyle = '#FFFFFF';
-           ctx.fillRect(this.x - 18, this.y - 10, 12, 10);
-           ctx.fillRect(this.x + 6, this.y - 10, 12, 10);
+           // No windows - just clean letter display
            
            // Letter - make it more distinct and bold
            ctx.fillStyle = '#FFFFFF';
@@ -593,10 +590,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                ctx.lineWidth = 2;
                ctx.strokeRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
                
-               // Windows
-               ctx.fillStyle = '#FFFFFF';
-               ctx.fillRect(car.x - 15, car.y - 8, 10, 8);
-               ctx.fillRect(car.x + 5, car.y - 8, 10, 8);
+               // No windows - just clean letter display
                
                // Letter - make it more distinct and bold
                ctx.fillStyle = '#FFFFFF';
