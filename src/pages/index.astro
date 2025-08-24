@@ -33,12 +33,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         const rect = canvas.getBoundingClientRect();
         canvas.width = Math.max(800, Math.floor(rect.width));
         canvas.height = Math.max(500, Math.floor(rect.height));
-        
-        // Recalculate letter positions after canvas resize
-        placeLetterCars();
       }
-      fit(); 
-      addEventListener("resize", fit);
 
       // Train states
       let train1: {
@@ -539,6 +534,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         requestAnimationFrame(gameLoop);
       }
 
+      // Set up canvas and start the animation
+      fit(); 
+      addEventListener("resize", () => {
+        fit();
+        placeLetterCars();
+      });
+      
       init();
       gameLoop();
     })();
