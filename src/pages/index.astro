@@ -46,7 +46,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         state: 'collecting' | 'complete' | 'smoking';
         smokeParticles: SmokeParticle[];
              } = {
-         x: Math.max(30, canvas.width * 0.05), // Smaller margin starting position
+         x: Math.max(20, canvas.width * 0.03), // Even smaller margin starting position
          y: canvas.height / 2 - 80, // Upper track
         direction: 1,
         speed: 3,
@@ -66,7 +66,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         state: 'collecting' | 'complete' | 'smoking';
         smokeParticles: SmokeParticle[];
              } = {
-         x: Math.max(30, canvas.width * 0.05), // Smaller margin starting position
+         x: Math.max(20, canvas.width * 0.03), // Even smaller margin starting position
          y: canvas.height / 2 + 80, // Lower track
         direction: 1,
         speed: 2.8, // Slightly different speed for variety
@@ -104,11 +104,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
          
          // Calculate responsive spacing based on canvas width
          const totalWidth = canvas.width;
-         const margin = Math.max(30, totalWidth * 0.05); // Smaller margin (5% of width, min 30px)
+         const margin = Math.max(20, totalWidth * 0.03); // Even smaller margin (3% of width, min 20px)
          const availableWidth = totalWidth - (margin * 2);
          
          // Calculate spacing to fit all letters with very small minimum spacing
-         const minSpacing = 25; // Much smaller minimum spacing for mobile
+         const minSpacing = 20; // Even smaller minimum spacing for mobile
          const spacing1 = Math.max(minSpacing, availableWidth / LETTERS1.length);
          const spacing2 = Math.max(minSpacing, availableWidth / LETTERS2.length);
          
@@ -123,8 +123,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
              x: startX1 + i * spacing1,
              y: track1Y,
              collected: false,
-             carWidth: Math.min(60, spacing1 * 0.8), // Responsive car width
-             carHeight: Math.min(40, spacing1 * 0.5)  // Responsive car height
+             carWidth: Math.min(50, spacing1 * 0.9), // More responsive car width
+             carHeight: Math.min(35, spacing1 * 0.6)  // More responsive car height
            });
          }
          
@@ -135,8 +135,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
              x: startX2 + i * spacing2,
              y: track2Y,
              collected: false,
-             carWidth: Math.min(60, spacing2 * 0.8), // Responsive car width
-             carHeight: Math.min(40, spacing2 * 0.5)  // Responsive car height
+             carWidth: Math.min(50, spacing2 * 0.9), // More responsive car width
+             carHeight: Math.min(35, spacing2 * 0.6)  // More responsive car height
            });
          }
       }
@@ -247,7 +247,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         fit();
         placeLetterCars();
                  train1 = {
-           x: Math.max(30, canvas.width * 0.05),
+           x: Math.max(20, canvas.width * 0.03),
            y: canvas.height / 2 - 80,
           direction: 1,
           speed: 3,
@@ -257,7 +257,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           smokeParticles: []
         };
                  train2 = {
-           x: Math.max(30, canvas.width * 0.05),
+           x: Math.max(20, canvas.width * 0.03),
            y: canvas.height / 2 + 80,
           direction: 1,
           speed: 2.8,
@@ -280,7 +280,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
            train.x += train.speed * train.direction;
            
            // Check boundaries and change direction
-           const margin = Math.max(30, canvas.width * 0.05); // Smaller margin for better mobile fit
+           const margin = Math.max(20, canvas.width * 0.03); // Even smaller margin for better mobile fit
            if (train.x > canvas.width - margin) {
              train.direction = -1;
            } else if (train.x < margin) {
