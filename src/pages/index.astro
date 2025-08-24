@@ -19,10 +19,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   <script>
     (() => {
-      const PHRASE1 = "TWEETSIESAYS";
-      const PHRASE2 = "HELLOWORLD";
-      const LETTERS1 = PHRASE1.split("").reverse(); // Reverse order for pickup
-      const LETTERS2 = PHRASE2.split("").reverse(); // Reverse order for pickup
+             const PHRASE1 = "TWEETSIE";
+       const PHRASE2 = "SAYS";
+       const PHRASE3 = "HELLO";
+       const PHRASE4 = "WORLD";
+       const LETTERS1 = PHRASE1.split("").reverse(); // Reverse order for pickup
+       const LETTERS2 = PHRASE2.split("").reverse(); // Reverse order for pickup
+       const LETTERS3 = PHRASE3.split("").reverse(); // Reverse order for pickup
+       const LETTERS4 = PHRASE4.split("").reverse(); // Reverse order for pickup
       
       const canvas = document.getElementById("trainCanvas") as HTMLCanvasElement;
       const ctx = canvas.getContext("2d")!;
@@ -35,129 +39,236 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         canvas.height = Math.max(500, Math.floor(rect.height));
       }
 
-      // Train states
-      let train1: {
-        x: number;
-        y: number;
-        direction: number;
-        speed: number;
-        cars: TrainCar[];
-        collected: number;
-        state: 'collecting' | 'complete' | 'smoking';
-        smokeParticles: SmokeParticle[];
-             } = {
-         x: Math.max(15, canvas.width * 0.02), // Much smaller margin starting position
-         y: canvas.height / 2 - 80, // Upper track
-        direction: 1,
-        speed: 3,
-        cars: [],
-        collected: 0,
-        state: 'collecting',
-        smokeParticles: []
-      };
+             // Train states - Four trains on different tracks
+       let train1: {
+         x: number;
+         y: number;
+         direction: number;
+         speed: number;
+         cars: TrainCar[];
+         collected: number;
+         state: 'collecting' | 'complete' | 'smoking';
+         smokeParticles: SmokeParticle[];
+         color: string;
+       } = {
+         x: 100,
+         y: canvas.height / 2 - 120, // Top track
+         direction: 1,
+         speed: 2.5,
+         cars: [],
+         collected: 0,
+         state: 'collecting',
+         smokeParticles: [],
+         color: '#DC2626' // Red train
+       };
 
-      let train2: {
-        x: number;
-        y: number;
-        direction: number;
-        speed: number;
-        cars: TrainCar[];
-        collected: number;
-        state: 'collecting' | 'complete' | 'smoking';
-        smokeParticles: SmokeParticle[];
-             } = {
-         x: Math.max(15, canvas.width * 0.02), // Much smaller margin starting position
-         y: canvas.height / 2 + 80, // Lower track
-        direction: 1,
-        speed: 2.8, // Slightly different speed for variety
-        cars: [],
-        collected: 0,
-        state: 'collecting',
-        smokeParticles: []
-      };
+       let train2: {
+         x: number;
+         y: number;
+         direction: number;
+         speed: number;
+         cars: TrainCar[];
+         collected: number;
+         state: 'collecting' | 'complete' | 'smoking';
+         smokeParticles: SmokeParticle[];
+         color: string;
+       } = {
+         x: 100,
+         y: canvas.height / 2 - 40, // Second track
+         direction: 1,
+         speed: 2.8,
+         cars: [],
+         collected: 0,
+         state: 'collecting',
+         smokeParticles: [],
+         color: '#1E40AF' // Blue train
+       };
 
-      // Letter cars positioned along the tracks
-      let letterCars1: Array<{
-        letter: string;
-        x: number;
-        y: number;
-        collected: boolean;
-        carWidth: number;
-        carHeight: number;
-      }> = [];
+       let train3: {
+         x: number;
+         y: number;
+         direction: number;
+         speed: number;
+         cars: TrainCar[];
+         collected: number;
+         state: 'collecting' | 'complete' | 'smoking';
+         smokeParticles: SmokeParticle[];
+         color: string;
+       } = {
+         x: 100,
+         y: canvas.height / 2 + 40, // Third track
+         direction: 1,
+         speed: 3.0,
+         cars: [],
+         collected: 0,
+         state: 'collecting',
+         smokeParticles: [],
+         color: '#059669' // Green train
+       };
 
-      let letterCars2: Array<{
-        letter: string;
-        x: number;
-        y: number;
-        collected: boolean;
-        carWidth: number;
-        carHeight: number;
-      }> = [];
+       let train4: {
+         x: number;
+         y: number;
+         direction: number;
+         speed: number;
+         cars: TrainCar[];
+         collected: number;
+         state: 'collecting' | 'complete' | 'smoking';
+         smokeParticles: SmokeParticle[];
+         color: string;
+       } = {
+         x: 100,
+         y: canvas.height / 2 + 120, // Bottom track
+         direction: 1,
+         speed: 2.2,
+         cars: [],
+         collected: 0,
+         state: 'collecting',
+         smokeParticles: [],
+         color: '#7C3AED' // Purple train
+       };
 
-             function placeLetterCars() {
+             // Letter cars positioned along the tracks
+       let letterCars1: Array<{
+         letter: string;
+         x: number;
+         y: number;
+         collected: boolean;
+         carWidth: number;
+         carHeight: number;
+         color: string;
+       }> = [];
+
+       let letterCars2: Array<{
+         letter: string;
+         x: number;
+         y: number;
+         collected: boolean;
+         carWidth: number;
+         carHeight: number;
+         color: string;
+       }> = [];
+
+       let letterCars3: Array<{
+         letter: string;
+         x: number;
+         y: number;
+         collected: boolean;
+         carWidth: number;
+         carHeight: number;
+         color: string;
+       }> = [];
+
+       let letterCars4: Array<{
+         letter: string;
+         x: number;
+         y: number;
+         collected: boolean;
+         carWidth: number;
+         carHeight: number;
+         color: string;
+       }> = [];
+
+                    function placeLetterCars() {
          letterCars1 = [];
          letterCars2 = [];
+         letterCars3 = [];
+         letterCars4 = [];
          
-         const track1Y = canvas.height / 2 - 80; // Upper track
-         const track2Y = canvas.height / 2 + 80; // Lower track
+         const track1Y = canvas.height / 2 - 120; // Top track
+         const track2Y = canvas.height / 2 - 40;  // Second track
+         const track3Y = canvas.height / 2 + 40;  // Third track
+         const track4Y = canvas.height / 2 + 120; // Bottom track
          
          // Calculate responsive spacing based on canvas width
          const totalWidth = canvas.width;
-         const margin = Math.max(15, totalWidth * 0.02); // Much smaller margin (2% of width, min 15px)
+         const margin = 80; // Fixed margin for better control
          const availableWidth = totalWidth - (margin * 2);
          
-         // Calculate spacing to fit all letters with very small minimum spacing
-         const minSpacing = 15; // Much smaller minimum spacing for mobile
-         const spacing1 = Math.max(minSpacing, availableWidth / LETTERS1.length);
-         const spacing2 = Math.max(minSpacing, availableWidth / LETTERS2.length);
+         // Calculate spacing to fit all letters
+         const spacing1 = Math.max(40, availableWidth / LETTERS1.length);
+         const spacing2 = Math.max(40, availableWidth / LETTERS2.length);
+         const spacing3 = Math.max(40, availableWidth / LETTERS3.length);
+         const spacing4 = Math.max(40, availableWidth / LETTERS4.length);
          
          // Center the letter collections
          const startX1 = margin + (availableWidth - (LETTERS1.length - 1) * spacing1) / 2;
          const startX2 = margin + (availableWidth - (LETTERS2.length - 1) * spacing2) / 2;
-        
-                 // Place letters for TWEETSIESAYS on upper track
+         const startX3 = margin + (availableWidth - (LETTERS3.length - 1) * spacing3) / 2;
+         const startX4 = margin + (availableWidth - (LETTERS4.length - 1) * spacing4) / 2;
+         
+         // Place letters for TWEETSIE on top track
          for (let i = 0; i < LETTERS1.length; i++) {
            letterCars1.push({
              letter: LETTERS1[i],
              x: startX1 + i * spacing1,
              y: track1Y,
              collected: false,
-             carWidth: Math.min(30, spacing1 * 0.8), // Much smaller car width
-             carHeight: Math.min(20, spacing1 * 0.5)  // Much smaller car height
+             carWidth: 50,
+             carHeight: 35,
+             color: '#DC2626'
            });
          }
          
-         // Place letters for HELLOWORLD on lower track
+         // Place letters for SAYS on second track
          for (let i = 0; i < LETTERS2.length; i++) {
            letterCars2.push({
              letter: LETTERS2[i],
              x: startX2 + i * spacing2,
              y: track2Y,
              collected: false,
-             carWidth: Math.min(30, spacing2 * 0.8), // Much smaller car width
-             carHeight: Math.min(20, spacing2 * 0.5)  // Much smaller car height
+             carWidth: 50,
+             carHeight: 35,
+             color: '#1E40AF'
            });
          }
-      }
+         
+         // Place letters for HELLO on third track
+         for (let i = 0; i < LETTERS3.length; i++) {
+           letterCars3.push({
+             letter: LETTERS3[i],
+             x: startX3 + i * spacing3,
+             y: track3Y,
+             collected: false,
+             carWidth: 50,
+             carHeight: 35,
+             color: '#059669'
+           });
+         }
+         
+         // Place letters for WORLD on bottom track
+         for (let i = 0; i < LETTERS4.length; i++) {
+           letterCars4.push({
+             letter: LETTERS4[i],
+             x: startX4 + i * spacing4,
+             y: track4Y,
+             collected: false,
+             carWidth: 50,
+             carHeight: 35,
+             color: '#7C3AED'
+           });
+         }
+       }
 
-      // Train car class
-      class TrainCar {
-        letter: string;
-        x: number;
-        y: number;
-        targetX: number;
-        targetY: number;
-        connected: boolean;
+             // Train car class
+       class TrainCar {
+         letter: string;
+         x: number;
+         y: number;
+         targetX: number;
+         targetY: number;
+         connected: boolean;
+         color: string;
 
-        constructor(letter: string, x: number, y: number) {
-          this.letter = letter;
-          this.x = x;
-          this.y = y;
-          this.targetX = x;
-          this.targetY = y;
-          this.connected = false;
-        }
+                 constructor(letter: string, x: number, y: number, color: string) {
+           this.letter = letter;
+           this.x = x;
+           this.y = y;
+           this.targetX = x;
+           this.targetY = y;
+           this.connected = false;
+           this.color = color;
+         }
 
         update() {
           // Smooth movement to target position
@@ -165,27 +276,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           this.y += (this.targetY - this.y) * 0.1;
         }
 
-                 draw() {
+                          draw() {
            ctx.save();
            
-           // Car body - much smaller for mobile
-           const scale = Math.min(1, canvas.width / 800); // Scale down on small screens
-           ctx.fillStyle = '#DC2626'; // Red car
-           ctx.fillRect(this.x - 20 * scale, this.y - 12 * scale, 40 * scale, 24 * scale);
+           // Car body - bigger and uses car color
+           ctx.fillStyle = this.color;
+           ctx.fillRect(this.x - 25, this.y - 15, 50, 30);
            
            // Car outline
-           ctx.strokeStyle = '#991B1B';
-           ctx.lineWidth = 1 * scale;
-           ctx.strokeRect(this.x - 20 * scale, this.y - 12 * scale, 40 * scale, 24 * scale);
+           ctx.strokeStyle = '#000000';
+           ctx.lineWidth = 2;
+           ctx.strokeRect(this.x - 25, this.y - 15, 50, 30);
            
            // Windows
-           ctx.fillStyle = '#1E40AF';
-           ctx.fillRect(this.x - 15 * scale, this.y - 8 * scale, 10 * scale, 8 * scale);
-           ctx.fillRect(this.x + 5 * scale, this.y - 8 * scale, 10 * scale, 8 * scale);
+           ctx.fillStyle = '#FFFFFF';
+           ctx.fillRect(this.x - 18, this.y - 10, 12, 10);
+           ctx.fillRect(this.x + 6, this.y - 10, 12, 10);
            
            // Letter
            ctx.fillStyle = '#FFFFFF';
-           ctx.font = `bold ${16 * scale}px Arial`;
+           ctx.font = 'bold 20px Arial';
            ctx.textAlign = 'center';
            ctx.textBaseline = 'middle';
            ctx.fillText(this.letter, this.x, this.y + 1);
@@ -193,10 +303,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
            // Coupling
            if (this.connected) {
              ctx.strokeStyle = '#374151';
-             ctx.lineWidth = 2 * scale;
+             ctx.lineWidth = 3;
              ctx.beginPath();
-             ctx.moveTo(this.x - 20 * scale, this.y);
-             ctx.lineTo(this.x - 25 * scale, this.y);
+             ctx.moveTo(this.x - 25, this.y);
+             ctx.lineTo(this.x - 32, this.y);
              ctx.stroke();
            }
            
@@ -247,27 +357,55 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       function init() {
         fit();
         placeLetterCars();
-                 train1 = {
-           x: Math.max(15, canvas.width * 0.02),
-           y: canvas.height / 2 - 80,
-          direction: 1,
-          speed: 3,
-          cars: [],
-          collected: 0,
-          state: 'collecting',
-          smokeParticles: []
-        };
-                 train2 = {
-           x: Math.max(15, canvas.width * 0.02),
-           y: canvas.height / 2 + 80,
-          direction: 1,
-          speed: 2.8,
-          cars: [],
-          collected: 0,
-          state: 'collecting',
-          smokeParticles: []
-        };
-        statusEl.textContent = `🚂 Train 1: ${PHRASE1} | Train 2: ${PHRASE2}`;
+                          train1 = {
+           x: 100,
+           y: canvas.height / 2 - 120,
+           direction: 1,
+           speed: 2.5,
+           cars: [],
+           collected: 0,
+           state: 'collecting',
+           smokeParticles: [],
+           color: '#DC2626'
+         };
+         
+         train2 = {
+           x: 100,
+           y: canvas.height / 2 - 40,
+           direction: 1,
+           speed: 2.8,
+           cars: [],
+           collected: 0,
+           state: 'collecting',
+           smokeParticles: [],
+           color: '#1E40AF'
+         };
+         
+         train3 = {
+           x: 100,
+           y: canvas.height / 2 + 40,
+           direction: 1,
+           speed: 3.0,
+           cars: [],
+           collected: 0,
+           state: 'collecting',
+           smokeParticles: [],
+           color: '#059669'
+         };
+         
+         train4 = {
+           x: 100,
+           y: canvas.height / 2 + 120,
+           direction: 1,
+           speed: 2.2,
+           cars: [],
+           collected: 0,
+           state: 'collecting',
+           smokeParticles: [],
+           color: '#7C3AED'
+         };
+         
+         statusEl.textContent = `🚂 Red: ${PHRASE1} | Blue: ${PHRASE2} | Green: ${PHRASE3} | Purple: ${PHRASE4}`;
       }
 
              function updateTrain(train: any, letterCars: any[], letters: string[], phrase: string) {
@@ -295,26 +433,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             car.collected = true;
             train.collected++;
             
-            // Add car to train
-            const newCar = new TrainCar(car.letter, train.x, train.y);
-            train.cars.push(newCar);
+                         // Add car to train
+             const newCar = new TrainCar(car.letter, train.x, train.y, car.color);
+             train.cars.push(newCar);
             
                          // Update status when both trains complete
              if (train.collected >= letters.length) {
                train.state = 'complete';
                
-               // Check if both trains are complete
-               if (train1.state === 'complete' && train2.state === 'complete') {
-                 statusEl.textContent = '🎉 Complete! TWEETSIESAYS HELLOWORLD';
+               // Check if all four trains are complete
+               if (train1.state === 'complete' && train2.state === 'complete' && 
+                   train3.state === 'complete' && train4.state === 'complete') {
+                 statusEl.textContent = '🎉 Complete! TWEETSIE SAYS HELLO WORLD';
                  
                  // Start smoking after a delay and stop train movement
                  setTimeout(() => {
                    train1.state = 'smoking';
                    train2.state = 'smoking';
-                   statusEl.textContent = '💨 Both trains celebrate with smoke!';
+                   train3.state = 'smoking';
+                   train4.state = 'smoking';
+                   statusEl.textContent = '💨 All trains celebrate with smoke!';
                  }, 1000);
                } else {
-                 statusEl.textContent = `🚂 ${phrase} complete! Waiting for other train...`;
+                 statusEl.textContent = `🚂 ${phrase} complete! Waiting for other trains...`;
                }
              }
           }
@@ -334,182 +475,199 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         });
       }
 
-      function updateTrains() {
-        updateTrain(train1, letterCars1, LETTERS1, PHRASE1);
-        updateTrain(train2, letterCars2, LETTERS2, PHRASE2);
-      }
+             function updateTrains() {
+         updateTrain(train1, letterCars1, LETTERS1, PHRASE1);
+         updateTrain(train2, letterCars2, LETTERS2, PHRASE2);
+         updateTrain(train3, letterCars3, LETTERS3, PHRASE3);
+         updateTrain(train4, letterCars4, LETTERS4, PHRASE4);
+       }
 
-      function updateSmoke() {
-        // Handle smoke for train1
-        if (train1.state === 'smoking') {
-          if (Math.random() < 0.6) {
-            train1.smokeParticles.push(new SmokeParticle(
-              train1.x + (train1.direction > 0 ? 40 : -40),
-              train1.y - 30
-            ));
-          }
-        }
-        
-        // Handle smoke for train2
-        if (train2.state === 'smoking') {
-          if (Math.random() < 0.6) {
-            train2.smokeParticles.push(new SmokeParticle(
-              train2.x + (train2.direction > 0 ? 40 : -40),
-              train2.y - 30
-            ));
-          }
-        }
-        
-        // Update existing particles for both trains
-        train1.smokeParticles = train1.smokeParticles.filter(particle => {
-          particle.update();
-          return particle.life > 0;
-        });
-        
-        train2.smokeParticles = train2.smokeParticles.filter(particle => {
-          particle.update();
-          return particle.life > 0;
-        });
-      }
+             function updateSmoke() {
+         // Handle smoke for all four trains
+         if (train1.state === 'smoking') {
+           if (Math.random() < 0.6) {
+             train1.smokeParticles.push(new SmokeParticle(
+               train1.x + (train1.direction > 0 ? 40 : -40),
+               train1.y - 30
+             ));
+           }
+         }
+         
+         if (train2.state === 'smoking') {
+           if (Math.random() < 0.6) {
+             train2.smokeParticles.push(new SmokeParticle(
+               train2.x + (train2.direction > 0 ? 40 : -40),
+               train2.y - 30
+             ));
+           }
+         }
+         
+         if (train3.state === 'smoking') {
+           if (Math.random() < 0.6) {
+             train3.smokeParticles.push(new SmokeParticle(
+               train3.x + (train3.direction > 0 ? 40 : -40),
+               train3.y - 30
+             ));
+           }
+         }
+         
+         if (train4.state === 'smoking') {
+           if (Math.random() < 0.6) {
+             train4.smokeParticles.push(new SmokeParticle(
+               train4.x + (train4.direction > 0 ? 40 : -40),
+               train4.y - 30
+             ));
+           }
+         }
+         
+         // Update existing particles for all trains
+         train1.smokeParticles = train1.smokeParticles.filter(particle => {
+           particle.update();
+           return particle.life > 0;
+         });
+         
+         train2.smokeParticles = train2.smokeParticles.filter(particle => {
+           particle.update();
+           return particle.life > 0;
+         });
+         
+         train3.smokeParticles = train3.smokeParticles.filter(particle => {
+           particle.update();
+           return particle.life > 0;
+         });
+         
+         train4.smokeParticles = train4.smokeParticles.filter(particle => {
+           particle.update();
+           return particle.life > 0;
+         });
+       }
 
-      function drawBackground() {
-        // Sky gradient
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        gradient.addColorStop(0, '#87CEEB');
-        gradient.addColorStop(1, '#E0F6FF');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Ground
-        ctx.fillStyle = '#8FBC8F';
-        ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
-        
-        // Upper Track
-        ctx.fillStyle = '#696969';
-        ctx.fillRect(0, canvas.height / 2 - 80 - 5, canvas.width, 10);
-        
-        // Lower Track
-        ctx.fillStyle = '#696969';
-        ctx.fillRect(0, canvas.height / 2 + 80 - 5, canvas.width, 10);
-        
-        // Track ties for upper track
-        ctx.fillStyle = '#8B4513';
-        for (let x = 0; x < canvas.width; x += 40) {
-          ctx.fillRect(x, canvas.height / 2 - 80 - 15, 30, 30);
-        }
-        
-        // Track ties for lower track
-        for (let x = 0; x < canvas.width; x += 40) {
-          ctx.fillRect(x, canvas.height / 2 + 80 - 15, 30, 30);
-        }
-      }
+             function drawBackground() {
+         // Sky gradient
+         const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+         gradient.addColorStop(0, '#87CEEB');
+         gradient.addColorStop(1, '#E0F6FF');
+         ctx.fillStyle = gradient;
+         ctx.fillRect(0, 0, canvas.width, canvas.height);
+         
+         // Ground
+         ctx.fillStyle = '#8FBC8F';
+         ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+         
+         // Four tracks
+         const trackY1 = canvas.height / 2 - 120;
+         const trackY2 = canvas.height / 2 - 40;
+         const trackY3 = canvas.height / 2 + 40;
+         const trackY4 = canvas.height / 2 + 120;
+         
+         // Draw tracks
+         ctx.fillStyle = '#696969';
+         ctx.fillRect(0, trackY1 - 5, canvas.width, 10);
+         ctx.fillRect(0, trackY2 - 5, canvas.width, 10);
+         ctx.fillRect(0, trackY3 - 5, canvas.width, 10);
+         ctx.fillRect(0, trackY4 - 5, canvas.width, 10);
+         
+         // Track ties for all tracks
+         ctx.fillStyle = '#8B4513';
+         for (let x = 0; x < canvas.width; x += 40) {
+           ctx.fillRect(x, trackY1 - 15, 30, 30);
+           ctx.fillRect(x, trackY2 - 15, 30, 30);
+           ctx.fillRect(x, trackY3 - 15, 30, 30);
+           ctx.fillRect(x, trackY4 - 15, 30, 30);
+         }
+       }
 
-      function drawLetterCars() {
-        // Draw letter cars for upper track
-        letterCars1.forEach(car => {
-          if (!car.collected) {
-            ctx.save();
-            
-            // Car body
-            ctx.fillStyle = '#FFD700';
-            ctx.fillRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
-            
-            // Car outline
-            ctx.strokeStyle = '#B8860B';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
-            
-            // Windows
-            ctx.fillStyle = '#1E40AF';
-            ctx.fillRect(car.x - 20, car.y - 12, 12, 10);
-            ctx.fillRect(car.x + 8, car.y - 12, 12, 10);
-            
-            // Letter
-            ctx.fillStyle = '#000000';
-            ctx.font = 'bold 20px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(car.letter, car.x, car.y + 1);
-            
-            ctx.restore();
-          }
-        });
+             function drawLetterCars() {
+         // Draw letter cars for all four tracks
+         [letterCars1, letterCars2, letterCars3, letterCars4].forEach((cars, trackIndex) => {
+           cars.forEach(car => {
+             if (!car.collected) {
+               ctx.save();
+               
+               // Car body with track-specific color
+               ctx.fillStyle = car.color;
+               ctx.fillRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
+               
+               // Car outline
+               ctx.strokeStyle = '#000000';
+               ctx.lineWidth = 2;
+               ctx.strokeRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
+               
+               // Windows
+               ctx.fillStyle = '#FFFFFF';
+               ctx.fillRect(car.x - 15, car.y - 8, 10, 8);
+               ctx.fillRect(car.x + 5, car.y - 8, 10, 8);
+               
+               // Letter
+               ctx.fillStyle = '#FFFFFF';
+               ctx.font = 'bold 18px Arial';
+               ctx.textAlign = 'center';
+               ctx.textBaseline = 'middle';
+               ctx.fillText(car.letter, car.x, car.y + 1);
+               
+               ctx.restore();
+             }
+           });
+         });
+       }
 
-        // Draw letter cars for lower track
-        letterCars2.forEach(car => {
-          if (!car.collected) {
-            ctx.save();
-            
-            // Car body
-            ctx.fillStyle = '#FFD700';
-            ctx.fillRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
-            
-            // Car outline
-            ctx.strokeStyle = '#B8860B';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(car.x - car.carWidth/2, car.y - car.carHeight/2, car.carWidth, car.carHeight);
-            
-            // Windows
-            ctx.fillStyle = '#1E40AF';
-            ctx.fillRect(car.x - 20, car.y - 12, 12, 10);
-            ctx.fillRect(car.x + 8, car.y - 12, 12, 10);
-            
-            // Letter
-            ctx.fillStyle = '#000000';
-            ctx.font = 'bold 20px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(car.letter, car.x, car.y + 1);
-            
-            ctx.restore();
-          }
-        });
-      }
-
-             function drawTrain(train: any) {
+                    function drawTrain(train: any) {
          ctx.save();
          
-         // Main locomotive - much smaller for mobile
+         // Main locomotive - much bigger and more detailed
          const locoX = train.x;
          const locoY = train.y;
-         const scale = Math.min(1, canvas.width / 800); // Scale down on small screens
          
          // Loco body
          ctx.fillStyle = '#1F2937';
-         ctx.fillRect(locoX - 30 * scale, locoY - 20 * scale, 60 * scale, 40 * scale);
+         ctx.fillRect(locoX - 40, locoY - 25, 80, 50);
          
          // Loco outline
          ctx.strokeStyle = '#111827';
-         ctx.lineWidth = 2 * scale;
-         ctx.strokeRect(locoX - 30 * scale, locoY - 20 * scale, 60 * scale, 40 * scale);
+         ctx.lineWidth = 3;
+         ctx.strokeRect(locoX - 40, locoY - 25, 80, 50);
          
-         // Loco details
-         ctx.fillStyle = '#DC2626';
-         ctx.fillRect(locoX - 27 * scale, locoY - 17 * scale, 54 * scale, 34 * scale);
+         // Loco details with train color
+         ctx.fillStyle = train.color;
+         ctx.fillRect(locoX - 35, locoY - 20, 70, 40);
          
          // Windows
          ctx.fillStyle = '#1E40AF';
-         ctx.fillRect(locoX - 20 * scale, locoY - 12 * scale, 15 * scale, 12 * scale);
-         ctx.fillRect(locoX + 5 * scale, locoY - 12 * scale, 15 * scale, 12 * scale);
+         ctx.fillRect(locoX - 25, locoY - 15, 20, 15);
+         ctx.fillRect(locoX + 5, locoY - 15, 20, 15);
          
          // Headlight
          ctx.fillStyle = '#FCD34D';
          ctx.beginPath();
-         ctx.arc(locoX + (train.direction > 0 ? 27 * scale : -27 * scale), locoY - 5 * scale, 5 * scale, 0, Math.PI * 2);
+         ctx.arc(locoX + (train.direction > 0 ? 35 : -35), locoY - 5, 8, 0, Math.PI * 2);
          ctx.fill();
          
          // Chimney
          ctx.fillStyle = '#374151';
-         ctx.fillRect(locoX - 8 * scale, locoY - 28 * scale, 16 * scale, 12 * scale);
+         ctx.fillRect(locoX - 10, locoY - 35, 20, 15);
+         
+         // Smoke stack detail
+         ctx.fillStyle = '#6B7280';
+         ctx.fillRect(locoX - 8, locoY - 40, 16, 8);
          
          // Wheels
          ctx.fillStyle = '#111827';
          ctx.beginPath();
-         ctx.arc(locoX - 15 * scale, locoY + 15 * scale, 8 * scale, 0, Math.PI * 2);
+         ctx.arc(locoX - 20, locoY + 20, 12, 0, Math.PI * 2);
          ctx.fill();
          ctx.beginPath();
-         ctx.arc(locoX + 15 * scale, locoY + 15 * scale, 8 * scale, 0, Math.PI * 2);
+         ctx.arc(locoX + 20, locoY + 20, 12, 0, Math.PI * 2);
          ctx.fill();
+         
+         // Wheel details
+         ctx.strokeStyle = '#4B5563';
+         ctx.lineWidth = 2;
+         ctx.beginPath();
+         ctx.arc(locoX - 20, locoY + 20, 8, 0, Math.PI * 2);
+         ctx.stroke();
+         ctx.beginPath();
+         ctx.arc(locoX + 20, locoY + 20, 8, 0, Math.PI * 2);
+         ctx.stroke();
          
          // Draw collected cars
          train.cars.forEach((car: TrainCar) => car.draw());
@@ -517,15 +675,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
          ctx.restore();
        }
 
-      function drawTrains() {
-        drawTrain(train1);
-        drawTrain(train2);
-      }
+             function drawTrains() {
+         drawTrain(train1);
+         drawTrain(train2);
+         drawTrain(train3);
+         drawTrain(train4);
+       }
 
-      function drawSmoke() {
-        train1.smokeParticles.forEach(particle => particle.draw());
-        train2.smokeParticles.forEach(particle => particle.draw());
-      }
+             function drawSmoke() {
+         train1.smokeParticles.forEach(particle => particle.draw());
+         train2.smokeParticles.forEach(particle => particle.draw());
+         train3.smokeParticles.forEach(particle => particle.draw());
+         train4.smokeParticles.forEach(particle => particle.draw());
+       }
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
