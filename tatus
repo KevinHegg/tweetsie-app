@@ -1,0 +1,5 @@
+[33m5dc6e3a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m chore: remove description text from BaseLayout
+[33meffaa39[m fix: remove white window blocks from train cars for clean letter display
+[33m8303019[m fix: make letters white for better visibility on colored backgrounds
+[33me56b86e[m fix: make letters more distinct and bold, remove quotes from train cars
+[33m56de5dd[m feat: redesign with four detailed trains for TWEETSIE SAYS HELLO WORLD

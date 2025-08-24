@@ -1,43 +1,95 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const REPO_URL = "https://github.com/kevinhegg/tweetsie-app"; // TODO: replace with your repo
-const SITE_URL = "https://tweetsie.app"; // or tweetsy.app if that’s the one
+const REPO_URL = "https://github.com/KevinHegg/tweetsie-app";
+const SITE_URL = "https://tweetsie.app";
 ---
 <BaseLayout title="[Collections as Data] for Apps" desc="Staging">
-  <h1 class="text-2xl font-semibold mb-2">Collections as Data for Apps</h1>
-  <p class="text-sm text-neutral-700 mb-6">
-    One-hour collaborative, prompt-driven build in Cursor. We start from a Hello World page and
-    have <code>/data</code> + <code>/public/images</code> pre-staged for speed.
-  </p>
+  <section class="mb-6">
+    <h1 class="text-3xl font-semibold">[Collections as Data] for Apps — Tweetsie (Live Cursor Build)</h1>
+    <p class="mt-2 text-sm text-neutral-700">
+      We're starting from a playful HELLO&nbsp;WORLD and, in ~60 minutes, will see how far a small group can build:
+      site structure, a minimal items list &amp; details page, maybe an image wall or a simple timeline—audience-led.
+    </p>
+  </section>
 
-  <div class="grid gap-4">
-    <section class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Plan (approx.)</h2>
+  <section class="grid md:grid-cols-2 gap-4">
+    <div class="bg-white border rounded-xl p-4">
+      <h2 class="font-semibold mb-2">Run of Show (≈60 min)</h2>
       <ol class="list-decimal ml-5 space-y-1 text-sm">
-        <li>Warm-up: “Snake eats HELLO WORLD” on the homepage.</li>
-        <li>Wire <code>items.json</code> (client-side fetch) and render a minimal list.</li>
-        <li>Audience-driven: filters (subjects, years), details page, CSV export, etc.</li>
+        <li><strong>5'</strong> Warm-up: adjust the Snake (speed/size/colors).</li>
+        <li><strong>10'</strong> Data wiring: fetch <code>/data/items.json</code>, render a basic list.</li>
+        <li><strong>20'</strong> Features (audience chooses): nav &amp; structure, subject/year filters, details page.</li>
+        <li><strong>20'</strong> Visual polish: image wall or simple timeline (by <code>year_start/year_end</code>).</li>
+        <li><strong>5'</strong> Ship: commit, build, verify on <a class="underline" href={SITE_URL}>{SITE_URL}</a>.</li>
       </ol>
-    </section>
+    </div>
 
-    <section class="bg-white border rounded-xl p-4 text-sm">
-      <h2 class="font-semibold mb-2">Starting point</h2>
-      <ul class="list-disc ml-5 space-y-1">
+    <div class="bg-white border rounded-xl p-4">
+      <h2 class="font-semibold mb-2">What's pre-staged</h2>
+      <ul class="list-disc ml-5 space-y-1 text-sm">
+        <li>Images in <code>/public/images/</code>; metadata JSON in <code>/data/</code> (copied to <code>/public/data/items.json</code> on build).</li>
+        <li>Domain: <a class="underline" href={SITE_URL}>{SITE_URL}</a> · Stack: Astro + Tailwind (static, client-side only).</li>
+        <li>Homepage: live HELLO WORLD train animation.</li>
         <li>Repo: <a class="underline" href={REPO_URL}>{REPO_URL}</a></li>
-        <li>Site: <a class="underline" href={SITE_URL}>{SITE_URL}</a></li>
-        <li>Data staged in <code>/data</code> (and can copy to <code>/public/data/items.json</code> on build).</li>
-        <li>Images staged in <code>/public/images/</code>.</li>
       </ul>
-    </section>
+    </div>
 
-    <section class="bg-white border rounded-xl p-4 text-sm">
-      <h2 class="font-semibold mb-2">Notes</h2>
-      <ul class="list-disc ml-5 space-y-1">
-        <li>No server required; pure client-side Astro + Tailwind.</li>
-        <li>We’ll write prompts together and let Cursor implement.</li>
-        <li>Scope: prototype only; can refine after the session.</li>
+    <div class="bg-white border rounded-xl p-4">
+      <h2 class="font-semibold mb-2">Technology & Costs (static-first, client-only stack)</h2>
+      <p class="text-sm text-neutral-700 mb-3">
+        We're using a <strong>static-first, client-only stack</strong>: Astro + Tailwind on the frontend, no backend, no database, built from GitHub and deployed on Netlify.
+      </p>
+
+      <ul class="list-disc ml-5 space-y-1 text-sm">
+        <li><strong>Domain (Porkbun)</strong>: <code>tweetsie.app</code> — <em>$5.99 first year</em>, then <em>$14.99/year</em>.</li>
+        <li><strong>Source (GitHub)</strong>: <a class="underline" href="https://github.com/KevinHegg/tweetsie-app">tweetsie-app repo</a> — <em>free</em>.</li>
+        <li><strong>Hosting (Netlify)</strong>: static site build &amp; CDN — <em>free tier (sufficient for this project)</em>.</li>
+        <li><strong>Assistant (Cursor)</strong>: AI pair-programmer — <em>$20/month</em>.</li>
       </ul>
-    </section>
-  </div>
+
+      <div class="mt-3 text-sm text-neutral-700">
+        <h3 class="font-medium mb-1">How GitHub &amp; Netlify work together</h3>
+        <ol class="list-decimal ml-5 space-y-1">
+          <li>We push changes to the GitHub repo (<code>main</code> branch).</li>
+          <li>Netlify sees the push, runs our build (<code>npm run build</code>), and publishes <code>dist/</code>.</li>
+          <li>Netlify serves the site globally over its CDN and auto-provisions HTTPS for <code>tweetsie.app</code>.</li>
+          <li>Every commit creates a new deploy; rollbacks are one click.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="bg-white border rounded-xl p-4">
+      <h2 class="font-semibold mb-2">Feature ideas (pick together)</h2>
+      <ul class="list-disc ml-5 space-y-1 text-sm">
+        <li><strong>Navigation &amp; site structure</strong>: Home · Items · Item details.</li>
+        <li><strong>List + details page</strong>: link <code>/items → /item/[id]</code>, render image + core metadata.</li>
+        <li><strong>Filters</strong>: subject chips/select, year min/max, text search (title/description).</li>
+        <li><strong>Image wall</strong>: grid respecting <code>orientation</code>/<code>aspect_ratio</code>.</li>
+        <li><strong>Timeline</strong>: simple year band by <code>year_start/year_end</code>.</li>
+      </ul>
+      
+      <div class="mt-3 pt-3 border-t">
+        <h2 class="font-semibold mb-2">Guardrails &amp; success</h2>
+        <ul class="list-disc ml-5 space-y-1 text-sm">
+          <li>Replace the train animation landing page with an appropriate welcome message or introduction to the site.</li>
+          <li><strong>Success</strong>: navigable items list, at least one working filter, a functional details page, something fun like a map, timeline, or wall of images, and a well-designed and engaging site look and feel.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white border rounded-xl p-4 mt-4">
+    <h2 class="font-semibold mb-2">Starter prompts (copy &amp; paste into Cursor)</h2>
+    <ol class="list-decimal ml-5 space-y-2 text-sm">
+      <li><code>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid (<a href="https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/" class="underline">https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/</a>) and the Artstor landing page (<a href="https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc" class="underline">https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/</a>), with clear links and no verbatim copying.</code></li>
+      <li><code>Create an "Items" page that lists all titles from our collection, with each title linking to its own page.</code></li>
+      <li><code>When I click a title, show a details page with the large image, title, date, short description, rights note, and a link back to the list.</code></li>
+      <li><code>Add a search box on the Items page that filters the list as I type.</code></li>
+      <li><code>Add a Subjects dropdown on the Items page to show only items matching the selected subject.</code></li>
+      <li><code>Add Start Year and End Year boxes on the Items page to limit items by year.</code></li>
+      <li><code>Add a toggle on the Items page to switch between a simple list and a wall of images.</code></li>
+      <li><code>Add a basic timeline control that lets me scrub or click through years to filter the items.</code></li>
+      <li><code>Add simple site navigation with links for Home, Items, and About/Notes, keeping the design clean and readable.</code></li>
+    </ol>
+  </section>
 </BaseLayout>
