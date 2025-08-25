@@ -62,11 +62,13 @@ const SITE_URL = "https://tweetsie.app";
 
     <div class="bg-white border rounded-xl p-4">
       <h2 class="font-semibold mb-2">What's pre-staged</h2>
-      <ul class="list-disc ml-5 space-y-1 text-sm">
-        <li>Images in <code>/public/images/</code>; metadata JSON in <code>/data/</code> (copied to <code>/public/data/items.json</code> on build).</li>
-        <li>Domain: <a class="underline" href={SITE_URL}>{SITE_URL}</a> · Stack: Astro + Tailwind (static, client-side only).</li>
-        <li>Homepage: live HELLO WORLD train animation.</li>
-        <li>Repo: <a class="underline" href={REPO_URL}>{REPO_URL}</a></li>
+      <ul class="list-disc ml-5 space-y-1 text-sm leading-tight">
+        <li><strong>Images</strong> in <code>/public/images/</code>; <strong>metadata</strong> JSON in <code>/data/</code> (copied to <code>/public/data/items.json</code> on build).</li>
+        <li><strong>Netlify</strong>: connected to GitHub; each push triggers <code>npm run build</code>, publishes <code>dist/</code>, serves via CDN with auto-HTTPS (free tier for now).</li>
+        <li><strong>Data extraction</strong>: images + metadata harvested from JSTOR via Python; some records have multiple images—<em>for this workshop we use the first image only</em>; metadata normalized (subjects, years, basic cleanup).</li>
+        <li><strong>Domain</strong>: <a class="underline" href="https://tweetsie.app">https://tweetsie.app</a> (Porkbun).</li>
+        <li><strong>Repo</strong>: <a class="underline" href="https://github.com/KevinHegg/tweetsie-app">github.com/KevinHegg/tweetsie-app</a>.</li>
+        <li><strong>Template-ready</strong>: to adapt for another collection, swap <code>/public/images/</code> + <code>/data/items.json</code>, update site text—everything else stays the same.</li>
       </ul>
     </div>
 
