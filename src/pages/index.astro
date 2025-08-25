@@ -26,14 +26,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const ctx = canvas.getContext("2d")!;
       const statusEl = document.getElementById("status")!;
 
-      // Train state - enters from right, stops when fully visible
-      let train = {
-        x: 0,
-        y: 0,
-        speed: 1.5, // Movement speed
-        state: 'entering', // 'entering', 'stopped', 'smoking'
-        totalLength: 0 // Will be calculated based on train size
-      };
+             // Train state - enters from right, stops when fully visible
+       let train = {
+         x: 0,
+         y: 0,
+         speed: 1.5, // Movement speed
+         state: 'entering', // 'entering', 'stopped', 'smoking'
+         totalLength: 0, // Will be calculated based on train size
+         carSpacing: 32, // Default car spacing
+         stopPosition: 40 // Default stop position
+       };
 
       // Track dimensions for side view
       let trackY = 0;
@@ -42,17 +44,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       // Smoke particles
       let smokeParticles: Array<{x: number, y: number, vx: number, vy: number, life: number, maxLife: number}> = [];
 
-      function fit() {
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = Math.min(800, Math.max(400, Math.floor(rect.width)));
-        canvas.height = Math.min(500, Math.max(300, Math.floor(rect.height)));
-        
-        // Calculate track position for side view
-        trackY = canvas.height * 0.7; // Track is 70% down the screen
-        trackHeight = 20; // Track thickness
-        
-                 // Calculate total train length (locomotive + all cars)
-         train.totalLength = 50 + (LETTERS.length * 32) + 20; // 50 for loco, 32 per car, 20 buffer
+             function fit() {
+         const rect = canvas.getBoundingClientRect();
+         canvas.width = Math.min(800, Math.max(400, Math.floor(rect.width)));
+         canvas.height = Math.min(500, Math.max(300, Math.floor(rect.height)));
+         
+         // Calculate track position for side view
+         trackY = canvas.height * 0.7; // Track is 70% down the screen
+         trackHeight = 20; // Track thickness
+         
+         // Responsive train settings based on screen size
+         const isMobile = canvas.width <= 600;
+         const carSpacing = isMobile ? 32 : 40; // More space on desktop
+         const stopPosition = isMobile ? 40 : 80; // Stop earlier on desktop
+         
+         // Calculate total train length (locomotive + all cars)
+         train.totalLength = 50 + (LETTERS.length * carSpacing) + 20; // 50 for loco, variable per car, 20 buffer
+         
+         // Store responsive settings for use in other functions
+         train.carSpacing = carSpacing;
+         train.stopPosition = stopPosition;
         
         // Initialize train position - start off-screen right
         train.x = canvas.width + 50;
@@ -65,15 +76,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           // Train moves from right to left
           train.x -= train.speed;
           
-          // Stop when the entire train is visible on the left
-          if (train.x <= 40) {
-            train.x = 40;
+                     // Stop when the entire train is visible on the left
+           if (train.x <= train.stopPosition) {
+             train.x = train.stopPosition;
             train.state = 'stopped';
             statusEl.textContent = '🚂 Train stopped - beginning smoke animation...';
           }
           
-          // Update status
-          const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - 40)) * 100);
+                     // Update status
+           const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - train.stopPosition)) * 100);
           statusEl.textContent = `🚂 Train entering: ${progress}%`;
         } else if (train.state === 'stopped') {
           // Train is stopped, start smoking
@@ -474,7 +485,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             ctx.fillRect(carOffset + 28, 12, 6, 8);
           }
           
-                     carOffset += 32; // Move to next car position
+                     carOffset += train.carSpacing; // Move to next car position
         }
         
         // Reset shadow
