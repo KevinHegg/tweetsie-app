@@ -66,14 +66,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           train.x -= train.speed;
           
           // Stop when the entire train is visible on the left
-          if (train.x <= 80) {
-            train.x = 80;
+          if (train.x <= 20) {
+            train.x = 20;
             train.state = 'stopped';
             statusEl.textContent = '🚂 Train stopped - beginning smoke animation...';
           }
           
           // Update status
-          const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - 80)) * 100);
+          const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - 20)) * 100);
           statusEl.textContent = `🚂 Train entering: ${progress}%`;
         } else if (train.state === 'stopped') {
           // Train is stopped, start smoking
