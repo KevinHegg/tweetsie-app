@@ -144,19 +144,45 @@ const SITE_URL = "https://tweetsie.app";
   </section>
 
   <section class="bg-white border rounded-xl p-4 mt-4 mobile-safe mobile-padding">
-    <h2 class="font-semibold mb-2">Starter prompts (copy &amp; paste into Cursor)</h2>
+    <h2 class="font-semibold mb-2">Starter prompts (build order)</h2>
     <ol class="list-decimal ml-5 space-y-2 text-sm">
-      <li><code>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid (<a href="https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/" class="underline">https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/</a>) and the Artstor landing page (<a href="https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc" class="underline">https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/</a>), with clear links and no verbatim copying.</code></li>
-      <li><code>Create an "Items" page that lists all titles from our collection, with each title linking to its own page.</code></li>
-      <li><code>When I click a title, show a details page with the large image, title, date, short description, rights note, and a link back to the list.</code></li>
-      <li><code>Add a search box on the Items page that filters the list as I type.</code></li>
-      <li><code>Add a Subjects dropdown on the Items page to show only items matching the selected subject.</code></li>
-      <li><code>Add Start Year and End Year boxes on the Items page to limit items by year.</code></li>
-      <li><code>Add a toggle on the Items page to switch between a simple list and a wall of images.</code></li>
-      <li><code>Add a basic timeline control that lets me scrub or click through years to filter the items.</code></li>
-      <li><code>Add simple site navigation with links for Home, Items, and About/Notes, keeping the design clean and readable.</code></li>
-             <li><code>Give the site a cohesive mid-century 'Tweetsie' look by sampling a palette from any image in /public/images (cream paper, brick-red, diesel-green, coal-black, sky-blue) and applying it as CSS variables in src/styles/global.css with Tailwind utility classes across the header, links, buttons, cards, and pages; use a system slab-serif for headings and system sans for body, add a subtle paper-grain background, style subject chips like ticket stubs and section dividers like railroad tracks, and update Home, Staging, Items, and Item pages to use this theme—no new dependencies, client-only.</code></li>
-       <li><code>Build an accessible fullscreen lightbox for item images (used on the results grid and item page) with zoom & pan via the lightweight Panzoom library (no prev/next), supporting wheel/pinch to zoom, drag to pan, double-click to zoom, ESC/click-backdrop to close, arrow keys to nudge pan, and no new UI frameworks.</code></li>
+      <li>Create an "Items" page that lists our collection (title + thumbnail) with each item linking to its own page.</li>
+      <li>When I click a title, show a details page with the large image, title, date, short description, rights note, and a link back to the list.</li>
+      <li>Add simple site navigation with links for Home, Items, and Welcome/Notes, keeping the design clean and readable.</li>
+      <li>Add a <strong>control panel</strong> at the top of the Items page with <strong>three filters</strong> (Subject, Start Year, End Year), a <strong>Sort</strong> selector (Title A–Z/Z–A and Year ↑/↓), and a <strong>keyword search</strong> that matches words found anywhere in <code>items.json</code> (title, description, subjects, etc.).</li>
+      <li>Add a toggle on the Items page to switch between a simple list and a wall of images that looks good with tall and wide photos.</li>
+      <li>Add an accessible fullscreen lightbox for item images with zoom &amp; pan (no previous/next), closing on ESC or backdrop click.</li>
+      <li>Add a lightweight timeline control that lets me filter by year ranges using <code>year_start</code>/<code>year_end</code>.</li>
+      <li>Give the site a cohesive mid-century "Tweetsie" look (palette from our images, ticket-stub subject chips, subtle paper grain, "railroad track" dividers), mobile-first.</li>
+      <li>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid and the Artstor landing page (clear links, no verbatim copying).</li>
     </ol>
+  </section>
+
+  <!-- One-shot Mega-Prompt (hidden until reveal) -->
+  <section class="bg-white border rounded-xl p-4 mt-4">
+    <details>
+      <summary class="cursor-pointer select-none text-sm text-neutral-700">
+        <span class="underline">One-shot Mega-Prompt (reveal)</span>
+      </summary>
+      <div class="mt-3">
+        <textarea readonly class="w-full h-72 text-xs p-3 border rounded-lg bg-neutral-50">
+Be creative: build a mobile-first, dynamic, highly interactive prototype for the Tweetsie collection using our static, client-only stack (Astro + Tailwind), our pre-staged data (fetch /data/items.json) and images (/public/images), and no servers or external APIs; keep the HELLO WORLD homepage animation intact.
+
+1) Create an "Items" page that lists the collection as titles with small thumbnails, each linking to its own detail page.  
+2) Build the details page to show the large image, title, date, short description, rights note, subjects as chips, and a back link to the list.  
+3) Add basic site navigation (Home, Items, Welcome/Notes) and keep the design clean and readable.  
+4) Add a CONTROL PANEL at the top of the Items page with: (a) Subject filter, (b) Start Year, (c) End Year; add a Sort selector (Title A–Z/Z–A and Year ascending/descending); add a keyword Search that matches words anywhere in items.json (title, description, subjects, etc.); all filtering/sorting/searching is client-side, fast, and debounced.  
+5) Add a toggle to switch the Items page between a simple list and an image wall that respects orientation/aspect_ratio and looks great on phones.  
+6) Add an accessible fullscreen LIGHTBOX for item images with zoom & pan (wheel/pinch to zoom, drag to pan, ESC/backdrop to close), no previous/next; implement with plain JS or a tiny helper (no UI frameworks), keeping bundle size small.  
+7) Add a simple TIMELINE control to filter by year ranges using year_start/year_end when present, falling back to parsing the year from the human date field.  
+8) Apply a cohesive mid-century "Tweetsie" THEME across the site: derive a small palette from one of our images (cream paper, brick-red, diesel-green, coal-black, sky-blue), use a slab-serif for headings and a humanist sans for text (system fonts only), add subtle paper grain, style subject chips like ticket stubs, and use "railroad track" dividers between sections.  
+9) Create a WELCOME page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid (https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/) and the Artstor landing page (https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc); write in your own words, add clear links, and keep it concise.  
+
+Guardrails: client-only (no servers/DB), only fetch /data/items.json; be accessible (semantic headings, alt text, keyboard support); keep code small and readable; no heavy dependencies; do not remove or break the homepage animation.  
+Output: updated pages/components with Tailwind classes, tiny helper utilities if needed, and a short summary of changes after each step.
+        </textarea>
+        <p class="mt-2 text-xs text-neutral-500">Tip: click inside, Ctrl/Cmd-A to copy.</p>
+      </div>
+    </details>
   </section>
 </BaseLayout>
