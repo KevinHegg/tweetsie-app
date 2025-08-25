@@ -4,7 +4,31 @@ const REPO_URL = "https://github.com/KevinHegg/tweetsie-app";
 const SITE_URL = "https://tweetsie.app";
 ---
 <BaseLayout title="[Collections as Data] for Apps" desc="Staging">
-  <section class="mb-6">
+  <style>
+    /* Mobile Safari fixes */
+    @media (max-width: 768px) {
+      .mobile-safe {
+        overflow-x: hidden;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+      
+      .mobile-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+      
+      .mobile-text {
+        font-size: 0.875rem !important;
+        line-height: 1.4 !important;
+      }
+      
+      .mobile-padding {
+        padding: 1rem !important;
+      }
+    }
+  </style>
+  <section class="mb-6 mobile-safe">
     <h1 class="text-3xl font-semibold">[Collections as Data] for Apps — Tweetsie (Live Cursor Build)</h1>
     <p class="mt-2 text-sm text-neutral-700">
       We're starting from a playful HELLO&nbsp;WORLD and, in ~60 minutes, will see how far a small group can build:
@@ -12,7 +36,7 @@ const SITE_URL = "https://tweetsie.app";
     </p>
   </section>
 
-  <section class="grid md:grid-cols-2 gap-4">
+  <section class="grid md:grid-cols-2 gap-4 mobile-grid mobile-safe">
     <div class="bg-white border rounded-xl p-4">
       <h2 class="font-semibold mb-2">Run of Show (≈60 min)</h2>
       <ol class="list-decimal ml-5 space-y-1 text-sm">
@@ -116,7 +140,7 @@ const SITE_URL = "https://tweetsie.app";
     </div>
   </section>
 
-  <section class="bg-white border rounded-xl p-4 mt-4">
+  <section class="bg-white border rounded-xl p-4 mt-4 mobile-safe mobile-padding">
     <h2 class="font-semibold mb-2">Starter prompts (copy &amp; paste into Cursor)</h2>
     <ol class="list-decimal ml-5 space-y-2 text-sm">
       <li><code>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid (<a href="https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/" class="underline">https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/</a>) and the Artstor landing page (<a href="https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc" class="underline">https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/</a>), with clear links and no verbatim copying.</code></li>
