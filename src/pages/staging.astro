@@ -40,8 +40,9 @@ const SITE_URL = "https://tweetsie.app";
   </section>
 
   <section class="grid md:grid-cols-2 gap-4 mobile-grid mobile-safe">
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Run of Show (60 min + optional 30)</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">⏰</div>
+       <h2 class="font-semibold mb-2">Run of Show (60 min + optional 30)</h2>
       <ol class="list-decimal ml-5 space-y-1 text-sm">
         <li><strong>10' Orientation:</strong> Review this Staging doc—goals, constraints, and how we got here (easy, cheap, reproducible).
           <ul class="list-disc ml-5 mt-1 space-y-1 text-[0.9em] text-neutral-700">
@@ -60,8 +61,9 @@ const SITE_URL = "https://tweetsie.app";
       <p class="text-xs text-neutral-500 mt-3">Optional +30': open build for extras (lightbox zoom/pan, CSV export later, URL state, etc.).</p>
     </div>
 
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">What's pre-staged</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">🎯</div>
+       <h2 class="font-semibold mb-2">What's pre-staged</h2>
       <ul class="list-disc ml-5 space-y-1 text-sm leading-tight">
         <li><strong>Images</strong> in <code>/public/images/</code>; <strong>metadata</strong> JSON in <code>/data/</code> (copied to <code>/public/data/items.json</code> on build).</li>
         <li><strong>Netlify</strong>: connected to GitHub; each push triggers <code>npm run build</code>, publishes <code>dist/</code>, serves via CDN with auto-HTTPS (free tier for now).</li>
@@ -72,8 +74,9 @@ const SITE_URL = "https://tweetsie.app";
       </ul>
     </div>
 
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Technology & Costs (static-first, client-only stack)</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">💻</div>
+       <h2 class="font-semibold mb-2">Technology & Costs (static-first, client-only stack)</h2>
       <p class="text-sm text-neutral-700 mb-3">
         We're using a <strong>static-first, client-only stack</strong>: Astro + Tailwind on the frontend, no backend, no database, built from GitHub and deployed on Netlify.
       </p>
@@ -97,8 +100,9 @@ const SITE_URL = "https://tweetsie.app";
       </div>
     </div>
 
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Considerations for Larger Collections</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">🚀</div>
+       <h2 class="font-semibold mb-2">Considerations for Larger Collections</h2>
       <p class="text-sm text-neutral-700 mb-2">
         For collections with thousands of items, you often need a fuller stack with a discovery layer and admin tools—which changes the vibe-coding constraints.
       </p>
@@ -134,8 +138,9 @@ const SITE_URL = "https://tweetsie.app";
       </p>
     </div>
 
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Feature ideas (pick together)</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">🎨</div>
+       <h2 class="font-semibold mb-2">Feature ideas (pick together)</h2>
       <ul class="list-disc ml-5 space-y-1 text-sm">
         <li><strong>Navigation &amp; site structure</strong>: Home · Items · Item details.</li>
         <li><strong>List + details page</strong>: link <code>/items → /item/[id]</code>, render image + core metadata.</li>
@@ -145,8 +150,9 @@ const SITE_URL = "https://tweetsie.app";
       </ul>
     </div>
 
-    <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Guardrails &amp; success</h2>
+         <div class="bg-white border rounded-xl p-4 relative">
+       <div class="absolute top-3 right-3 text-2xl">✅</div>
+       <h2 class="font-semibold mb-2">Guardrails &amp; success</h2>
       <ul class="list-disc ml-5 space-y-1 text-sm">
         <li>Replace the train animation landing page with an appropriate welcome message or introduction to the site.</li>
         <li><strong>Success</strong>: navigable items list, at least one working filter, a functional details page, something fun like a map, timeline, or wall of images, and a well-designed and engaging site look and feel.</li>
@@ -154,43 +160,66 @@ const SITE_URL = "https://tweetsie.app";
     </div>
   </section>
 
-  <section class="bg-white border rounded-xl p-4 mt-4 mobile-safe mobile-padding">
-    <h2 class="font-semibold mb-2">Starter prompts (build order)</h2>
+     <section class="bg-white border rounded-xl p-4 relative">
+     <div class="absolute top-3 right-3 text-2xl">🔨</div>
+     <h2 class="font-semibold mb-2">Starter prompts (build order)</h2>
+
+    <!-- Tip -->
+    <div class="flex items-start gap-2 p-3 mb-3 rounded-lg border bg-amber-50 text-sm leading-snug">
+      <div class="text-amber-600 mt-0.5">💡</div>
+      <p>
+        Tip: When constructing prompts, modern LLMs like <strong>ChatGPT 5</strong> and <strong>Copilot</strong> are very helpful—start simple, let them suggest steps, and refine with small follow-ups.
+      </p>
+    </div>
+
     <ol class="list-decimal ml-5 space-y-2 text-sm">
-      <li>Create an "Items" page that lists our collection (title + thumbnail) with each item linking to its own page.</li>
-      <li>When I click a title, show a details page with the large image, title, date, short description, rights note, and a link back to the list.</li>
-      <li>Add simple site navigation with links for Home, Items, and Welcome/Notes, keeping the design clean and readable.</li>
-      <li>Add a <strong>control panel</strong> at the top of the Items page with <strong>three filters</strong> (Subject, Start Year, End Year), a <strong>Sort</strong> selector (Title A–Z/Z–A and Year ↑/↓), and a <strong>keyword search</strong> that matches words found anywhere in <code>items.json</code> (title, description, subjects, etc.).</li>
-      <li>Add a toggle on the Items page to switch between a simple list and a wall of images that looks good with tall and wide photos.</li>
-      <li>Add an accessible fullscreen lightbox for item images with zoom &amp; pan (no previous/next), closing on ESC or backdrop click.</li>
-      <li>Add a lightweight timeline control that lets me filter by year ranges using <code>year_start</code>/<code>year_end</code>.</li>
+      <li>Create an "Items" page that lists our collection (title + thumbnail from <code>/data/items.json</code>) with each item linking to its own page.</li>
+      <li>When I click a title, show a details page with the large image, title, date, short description, rights note, subjects as tags, and a link back to the list.</li>
+      <li>Add simple site navigation with links for Home, Items, and Welcome/Notes, keeping the design clean, readable, and mobile-first.</li>
+      <li>Add a control panel at the top of the Items page with three filters (Subject, Start Year, End Year), a Sort selector (Title A–Z/Z–A and Year ↑/↓), and a keyword search across title, description, and subjects—everything client-side, fast, and debounced.</li>
+      <li>Add a toggle on the Items page to switch between a simple list and a responsive wall of images that looks good with tall and wide photos.</li>
+      <li>Add an accessible fullscreen lightbox for item images with zoom &amp; pan (wheel/pinch to zoom, drag to pan), closing on ESC or backdrop click.</li>
+      <li>Add a lightweight timeline control that lets me filter by year ranges using <code>year_start</code>/<code>year_end</code> (fall back to a parsed year if needed).</li>
       <li>Give the site a cohesive mid-century "Tweetsie" look (palette from our images, ticket-stub subject chips, subtle paper grain, "railroad track" dividers), mobile-first.</li>
       <li>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid and the Artstor landing page (clear links, no verbatim copying).</li>
     </ol>
   </section>
 
-  <!-- One-shot Mega-Prompt (hidden until reveal) -->
-  <section class="bg-white border rounded-xl p-4 mt-4">
+     <!-- One-shot Mega-Prompt (hidden until reveal) -->
+   <section class="bg-white border rounded-xl p-4 mt-4 relative">
+     <div class="absolute top-3 right-3 text-2xl">🚀</div>
     <details>
       <summary class="cursor-pointer select-none text-sm text-neutral-700">
         <span class="underline">One-shot Mega-Prompt (reveal)</span>
       </summary>
       <div class="mt-3">
         <textarea readonly class="w-full h-72 text-xs p-3 border rounded-lg bg-neutral-50">
-Be creative: build a mobile-first, dynamic, highly interactive prototype for the Tweetsie collection using our static, client-only stack (Astro + Tailwind), our pre-staged data (fetch /data/items.json) and images (/public/images), and no servers or external APIs; keep the HELLO WORLD homepage animation intact.
+Be creative: build a **mobile-first**, dynamic, highly interactive prototype for the Tweetsie collection using our **static, client-only stack** (Astro + Tailwind), our pre-staged data (**fetch `/data/items.json`**) and images (`/public/images`), and **no servers or external APIs**; **keep the HELLO WORLD homepage animation intact**.
 
-1) Create an "Items" page that lists the collection as titles with small thumbnails, each linking to its own detail page.  
-2) Build the details page to show the large image, title, date, short description, rights note, subjects as chips, and a back link to the list.  
-3) Add basic site navigation (Home, Items, Welcome/Notes) and keep the design clean and readable.  
-4) Add a CONTROL PANEL at the top of the Items page with: (a) Subject filter, (b) Start Year, (c) End Year; add a Sort selector (Title A–Z/Z–A and Year ascending/descending); add a keyword Search that matches words anywhere in items.json (title, description, subjects, etc.); all filtering/sorting/searching is client-side, fast, and debounced.  
-5) Add a toggle to switch the Items page between a simple list and an image wall that respects orientation/aspect_ratio and looks great on phones.  
-6) Add an accessible fullscreen LIGHTBOX for item images with zoom & pan (wheel/pinch to zoom, drag to pan, ESC/backdrop to close), no previous/next; implement with plain JS or a tiny helper (no UI frameworks), keeping bundle size small.  
-7) Add a simple TIMELINE control to filter by year ranges using year_start/year_end when present, falling back to parsing the year from the human date field.  
-8) Apply a cohesive mid-century "Tweetsie" THEME across the site: derive a small palette from one of our images (cream paper, brick-red, diesel-green, coal-black, sky-blue), use a slab-serif for headings and a humanist sans for text (system fonts only), add subtle paper grain, style subject chips like ticket stubs, and use "railroad track" dividers between sections.  
-9) Create a WELCOME page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid (https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/) and the Artstor landing page (https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc); write in your own words, add clear links, and keep it concise.  
+**Data assumptions (defensive):** each record may include:
+`id, title, image, date, year_start, year_end, description, subjects[], rights, repository, local_identifier, source_url`. Treat fields as optional; don't crash.
 
-Guardrails: client-only (no servers/DB), only fetch /data/items.json; be accessible (semantic headings, alt text, keyboard support); keep code small and readable; no heavy dependencies; do not remove or break the homepage animation.  
-Output: updated pages/components with Tailwind classes, tiny helper utilities if needed, and a short summary of changes after each step.
+**Do this in order (small, readable commits):**
+
+1. **Items page:** create `src/pages/items.astro` that lists items with **title + small thumbnail**, each linking to `/item/[id]`.
+2. **Details page:** create `src/pages/item/[id].astro` showing **large image, title, date, short description, rights note, subjects as chips**, and a **Back to Items** link.
+3. **Navigation:** add a simple header nav (**Home / Items / Welcome**) and keep the design clean, readable, and mobile-first.
+4. **Control panel (top of Items):** add **Subject**, **Start Year**, **End Year** filters; a **Sort** selector (**Title A–Z/Z–A**, **Date/Year ↑/↓** using `year_start/year_end` or parsed year); and a **keyword Search** that matches words anywhere in the record (title, description, subjects, etc.); combine filters with **AND**, debounce search, and show a small **"Showing X of N"** count.
+5. **View toggle:** add a toggle to switch between a **simple list** and a **responsive image wall** that respects `orientation/aspect_ratio` when present.
+6. **Lightbox:** add an **accessible fullscreen lightbox** for item images with **zoom & pan** (wheel/pinch to zoom, drag to pan, ESC/backdrop click to close); no prev/next needed; implement in **plain JS** or with a tiny helper (e.g., **Panzoom**) without adding a UI framework.
+7. **Timeline (lightweight):** add a simple year slider/range to filter using `year_start/year_end`, falling back to parsing a single year from `date`.
+8. **Theme ("mid-century Tweetsie"):** derive a small palette from an image (cream paper, brick-red, diesel-green, coal-black, sky-blue), define CSS variables in `src/styles/global.css`, use **slab-serif** headings + **system sans** body, add subtle paper-grain, style subject chips like **ticket stubs**, and use **railroad-track** dividers.
+9. **Welcome page:** add `/welcome` that briefly introduces the Tweetsie Collection using and citing the JMU finding aid ([https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/](https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/)) and the Artstor landing page ([https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc](https://www.jstor.org/site/jamesmadisonuniversity/jamesmadisonuniversitycharlesgrattanpricejrcollectionontweetsieandtheshenandoahcentralrailroad/?so=item_title_str_asc)) **in your own words** with clear links.
+
+**Implementation notes:**
+
+* **Client-only**: no SSR, no external APIs; only `fetch('/data/items.json')`.
+* **A11y**: semantic headings, alt text on images, focus trap + ESC for lightbox, keyboard support for filters.
+* **Resilience**: handle missing fields; if an image is missing, show a pleasant placeholder.
+* **Performance**: no heavy deps; keep code small; debounce search; avoid layout thrash in the wall.
+* **UX niceties**: remember last filters during a session; optional URL query params if trivial.
+
+**Output:** updated pages/components with Tailwind classes, tiny helpers as needed, **zero console errors**, and a **one-paragraph summary of changes** after each major step.
         </textarea>
         <p class="mt-2 text-xs text-neutral-500">Tip: click inside, Ctrl/Cmd-A to copy.</p>
       </div>
