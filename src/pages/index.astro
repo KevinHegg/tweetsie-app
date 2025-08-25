@@ -51,8 +51,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         trackY = canvas.height * 0.7; // Track is 70% down the screen
         trackHeight = 20; // Track thickness
         
-        // Calculate total train length (locomotive + all cars)
-        train.totalLength = 50 + (LETTERS.length * 35) + 20; // 50 for loco, 35 per car, 20 buffer
+                 // Calculate total train length (locomotive + all cars)
+         train.totalLength = 50 + (LETTERS.length * 32) + 20; // 50 for loco, 32 per car, 20 buffer
         
         // Initialize train position - start off-screen right
         train.x = canvas.width + 50;
@@ -66,14 +66,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           train.x -= train.speed;
           
           // Stop when the entire train is visible on the left
-          if (train.x <= 20) {
-            train.x = 20;
+          if (train.x <= 30) {
+            train.x = 30;
             train.state = 'stopped';
             statusEl.textContent = '🚂 Train stopped - beginning smoke animation...';
           }
           
           // Update status
-          const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - 20)) * 100);
+          const progress = Math.floor(((canvas.width + 50 - train.x) / (canvas.width + 50 - 30)) * 100);
           statusEl.textContent = `🚂 Train entering: ${progress}%`;
         } else if (train.state === 'stopped') {
           // Train is stopped, start smoking
@@ -474,7 +474,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             ctx.fillRect(carOffset + 28, 12, 6, 8);
           }
           
-          carOffset += 35; // Move to next car position
+                     carOffset += 32; // Move to next car position
         }
         
         // Reset shadow
