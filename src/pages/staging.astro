@@ -41,14 +41,23 @@ const SITE_URL = "https://tweetsie.app";
 
   <section class="grid md:grid-cols-2 gap-4 mobile-grid mobile-safe">
     <div class="bg-white border rounded-xl p-4">
-      <h2 class="font-semibold mb-2">Run of Show (≈60 min)</h2>
+      <h2 class="font-semibold mb-2">Run of Show (60 min + optional 30)</h2>
       <ol class="list-decimal ml-5 space-y-1 text-sm">
-        <li><strong>5'</strong> Warm-up: adjust the Train (speed/size/colors).</li>
-        <li><strong>10'</strong> Data wiring: fetch <code>/data/items.json</code>, render a basic list.</li>
-        <li><strong>20'</strong> Features (audience chooses): nav &amp; structure, subject/year filters, details page.</li>
-        <li><strong>20'</strong> Visual polish: image wall or simple timeline (by <code>year_start/year_end</code>).</li>
-        <li><strong>5'</strong> Ship: commit, build, verify on <a class="underline" href={SITE_URL}>{SITE_URL}</a>.</li>
+        <li><strong>10' Orientation:</strong> Review this Staging doc—goals, constraints, and how we got here (easy, cheap, reproducible).
+          <ul class="list-disc ml-5 mt-1 space-y-1 text-[0.9em] text-neutral-700">
+            <li>Domain: <code>tweetsie.app</code> (Porkbun).</li>
+            <li>Repo: GitHub → small Astro + Tailwind scaffold (client-only).</li>
+            <li>Hosting: Netlify builds from GitHub and serves the static site over CDN.</li>
+            <li>Data & images pre-staged locally (<code>/data</code>, <code>/public/images</code>).</li>
+            <li>Costs: low now, predictable later (see Technology & Costs card).</li>
+          </ul>
+        </li>
+        <li><strong>15' Data wiring:</strong> Fetch <code>/data/items.json</code> and render a minimal list (title + thumbnail).</li>
+        <li><strong>25' Core features (audience chooses):</strong> navigation & site structure; an Items control panel with Subject, Start Year, End Year, Sort (Title A–Z/Z–A, Year ↑/↓), and keyword search; item details page.</li>
+        <li><strong>10' Visual polish:</strong> apply the mid-century "Tweetsie" theme; optionally add an image wall or simple timeline by <code>year_start/year_end</code>.</li>
+        <li><strong>5' Ship:</strong> commit → build on Netlify → verify at <a class="underline" href="https://tweetsie.app">https://tweetsie.app</a>.</li>
       </ol>
+      <p class="text-xs text-neutral-500 mt-3">Optional +30': open build for extras (lightbox zoom/pan, CSV export later, URL state, etc.).</p>
     </div>
 
     <div class="bg-white border rounded-xl p-4">
