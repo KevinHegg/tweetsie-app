@@ -161,30 +161,36 @@ const SITE_URL = "https://tweetsie.app";
     </div>
   </section>
 
-     <section class="bg-white border rounded-xl p-4 relative">
-     <div class="absolute top-3 right-3 text-2xl">🔨</div>
-     <h2 class="font-semibold mb-2">Starter prompts (build order)</h2>
+           <!-- Start Prompts in Build Order (hidden until reveal) -->
+      <section class="bg-white border rounded-xl p-4 relative">
+        <div class="absolute top-3 right-3 text-2xl">🔨</div>
+        <details>
+          <summary class="cursor-pointer select-none text-sm text-neutral-700">
+            <span class="underline">Start Prompts in Build Order (reveal)</span>
+          </summary>
+          <div class="mt-3">
+            <!-- Tip -->
+            <div class="flex items-start gap-2 p-3 mb-3 rounded-lg border bg-amber-50 text-sm leading-snug">
+              <div class="text-amber-600 mt-0.5">💡</div>
+              <p>
+                Tip: When constructing prompts, modern LLMs like <strong>ChatGPT 5</strong> and <strong>Copilot</strong> are very helpful—start simple, let them suggest steps, and refine with small follow-ups.
+              </p>
+            </div>
 
-    <!-- Tip -->
-    <div class="flex items-start gap-2 p-3 mb-3 rounded-lg border bg-amber-50 text-sm leading-snug">
-      <div class="text-amber-600 mt-0.5">💡</div>
-      <p>
-        Tip: When constructing prompts, modern LLMs like <strong>ChatGPT 5</strong> and <strong>Copilot</strong> are very helpful—start simple, let them suggest steps, and refine with small follow-ups.
-      </p>
-    </div>
-
-    <ol class="list-decimal ml-5 space-y-2 text-sm">
-      <li>Create an "Items" page that lists our collection (title + thumbnail from <code>/data/items.json</code>) with each item linking to its own page.</li>
-      <li>When I click a title, show a details page with the large image, title, date, short description, rights note, subjects as tags, and a link back to the list.</li>
-      <li>Add simple site navigation with links for Home, Items, and Welcome/Notes, keeping the design clean, readable, and mobile-first.</li>
-      <li>Add a control panel at the top of the Items page with three filters (Subject, Start Year, End Year), a Sort selector (Title A–Z/Z–A and Year ↑/↓), and a keyword search across title, description, and subjects—everything client-side, fast, and debounced.</li>
-      <li>Add a toggle on the Items page to switch between a simple list and a responsive wall of images that looks good with tall and wide photos.</li>
-      <li>Add an accessible fullscreen lightbox for item images with zoom &amp; pan (wheel/pinch to zoom, drag to pan), closing on ESC or backdrop click.</li>
-      <li>Add a lightweight timeline control that lets me filter by year ranges using <code>year_start</code>/<code>year_end</code> (fall back to a parsed year if needed).</li>
-      <li>Give the site a cohesive mid-century "Tweetsie" look (palette from our images, ticket-stub subject chips, subtle paper grain, "railroad track" dividers), mobile-first.</li>
-      <li>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid and the Artstor landing page (clear links, no verbatim copying).</li>
-    </ol>
-  </section>
+            <ol class="list-decimal ml-5 space-y-2 text-sm">
+              <li>Create an "Items" page that lists our collection (title + thumbnail from <code>/data/items.json</code>) with each item linking to its own page.</li>
+              <li>When I click a title, show a details page with the large image, title, date, short description, rights note, subjects as tags, and a link back to the list.</li>
+              <li>Add simple site navigation with links for Home, Items, and Welcome/Notes, keeping the design clean, readable, and mobile-first.</li>
+              <li>Add a control panel at the top of the Items page with three filters (Subject, Start Year, End Year), a Sort selector (Title A–Z/Z–A and Year ↑/↓), and a keyword search across title, description, and subjects—everything client-side, fast, and debounced.</li>
+              <li>Add a toggle on the Items page to switch between a simple list and a responsive wall of images that looks good with tall and wide photos.</li>
+              <li>Add an accessible fullscreen lightbox for item images with zoom &amp; pan (wheel/pinch to zoom, drag to pan), closing on ESC or backdrop click.</li>
+              <li>Add a lightweight timeline control that lets me filter by year ranges using <code>year_start</code>/<code>year_end</code> (fall back to a parsed year if needed).</li>
+              <li>Give the site a cohesive mid-century "Tweetsie" look (palette from our images, ticket-stub subject chips, subtle paper grain, "railroad track" dividers), mobile-first.</li>
+              <li>Create a Welcome page that briefly introduces the Tweetsie Collection using and citing the JMU finding aid and the Artstor landing page (clear links, no verbatim copying).</li>
+            </ol>
+          </div>
+        </details>
+      </section>
 
      <!-- One-shot Mega-Prompt (hidden until reveal) -->
    <section class="bg-white border rounded-xl p-4 mt-4 relative">
