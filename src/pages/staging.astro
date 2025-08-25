@@ -44,15 +44,16 @@ const SITE_URL = "https://tweetsie.app";
        <div class="absolute top-3 right-3 text-2xl">⏰</div>
        <h2 class="font-semibold mb-2">Run of Show (60 min + optional 30)</h2>
       <ol class="list-decimal ml-5 space-y-1 text-sm">
-        <li><strong>10' Orientation:</strong> Review this Staging doc—goals, constraints, and how we got here (easy, cheap, reproducible).
-          <ul class="list-disc ml-5 mt-1 space-y-1 text-[0.9em] text-neutral-700">
-            <li>Domain: <code>tweetsie.app</code> (Porkbun).</li>
-            <li>Repo: GitHub → small Astro + Tailwind scaffold (client-only).</li>
-            <li>Hosting: Netlify builds from GitHub and serves the static site over CDN.</li>
-            <li>Data & images pre-staged locally (<code>/data</code>, <code>/public/images</code>).</li>
-            <li>Costs: low now, predictable later (see Technology & Costs card).</li>
-          </ul>
-        </li>
+                 <li><strong>10' Orientation:</strong> Review this Staging doc—goals, constraints, and how we got here (easy, cheap, reproducible).
+           <ul class="list-disc ml-5 mt-1 space-y-1 text-[0.9em] text-neutral-700">
+             <li>Domain: <code>tweetsie.app</code> (Porkbun).</li>
+             <li>Repo: GitHub → small Astro + Tailwind scaffold (client-only).</li>
+             <li>Hosting: Netlify builds from GitHub and serves the static site over CDN.</li>
+             <li>Data & images pre-staged locally (<code>/data</code>, <code>/public/images</code>).</li>
+             <li>Costs: low now, predictable later (see Technology & Costs card).</li>
+             <li><strong>Collection context:</strong> <a href="https://www.lib.jmu.edu/charles-grattan-price-jr-collection-on-tweetsie-and-the-shenandoah-central-railroad-is-now-open-for-research/" class="underline text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer">JMU finding aid for the Tweetsie Collection</a>.</li>
+           </ul>
+         </li>
         <li><strong>15' Data wiring:</strong> Fetch <code>/data/items.json</code> and render a minimal list (title + thumbnail).</li>
         <li><strong>25' Core features (audience chooses):</strong> navigation & site structure; an Items control panel with Subject, Start Year, End Year, Sort (Title A–Z/Z–A, Year ↑/↓), and keyword search; item details page.</li>
         <li><strong>10' Visual polish:</strong> apply the mid-century "Tweetsie" theme; optionally add an image wall or simple timeline by <code>year_start/year_end</code>.</li>
